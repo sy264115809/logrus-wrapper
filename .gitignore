@@ -22,3 +22,13 @@ _testmain.go
 *.exe
 *.test
 *.prof
+
+
+# ide
+.idea
+.vscode
+
+# go
+vendor
+
+.DS_Store
