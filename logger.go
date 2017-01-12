@@ -59,6 +59,11 @@ func New(c *Config) *Logger {
 	return logger
 }
 
+//Prefix returns prefix
+func (logger *Logger) Prefix() string {
+	return logger.prefix
+}
+
 func (logger *Logger) setupPrefix(prefix string, disableColor bool) {
 	logger.Formatter = &prefixed.TextFormatter{
 		DisableColors: disableColor,
