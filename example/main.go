@@ -3,12 +3,17 @@ package main
 import "github.com/sy264115809/logrush"
 
 func main() {
+	globalLogger()
 	defaultLogger()
 	outputToFileLogger()
 	verboseLogger()
 	showCallerLogger()
 	showCallerWithAdjustLogger()
 	withoutColorLogger()
+}
+
+func globalLogger() {
+	logrush.Info("global logger")
 }
 
 func defaultLogger() {
