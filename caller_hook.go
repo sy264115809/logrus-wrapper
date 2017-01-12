@@ -10,8 +10,14 @@ import (
 	"github.com/Sirupsen/logrus"
 )
 
+const (
+	keyCallDepthOffset       = "__call_depth_offset__"
+	defaultDisplayPathLength = 3
+)
+
 type callerHook struct {
-	depthAdjust int
+	show          bool
+	displayLength int
 }
 
 var (
@@ -29,18 +35,32 @@ func (h *callerHook) Levels() []logrus.Level {
 }
 
 func (h *callerHook) Fire(entry *logrus.Entry) error {
-	for skip := 2; ; skip++ {
-		if _, filePath, line, ok := runtime.Caller(skip); ok && !patternSkipCaller.MatchString(filePath) {
-			if _, filePath, line, ok = runtime.Caller(skip + h.depthAdjust); ok {
-				file := filepath.Base(filePath)
-				parts := strings.SplitAfter(file, string(filepath.Separator))
-				if len(parts) > 2 {
-					file = strings.Join(parts[len(parts)-2:], "")
+	var depthOffset int
+	if h.show {
+		if o, ok := entry.Data[keyCallDepthOffset].(int); ok {
+			depthOffset = o
+		}
+
+		for skip := 2; ; skip++ {
+			if _, filePath, line, ok := runtime.Caller(skip); ok && !patternSkipCaller.MatchString(filePath) {
+				if _, filePath, line, ok = runtime.Caller(skip + depthOffset); ok {
+					parts := strings.SplitAfter(filePath, string(filepath.Separator))
+					if l := h.DisplayLength(); l > 0 && len(parts) > l {
+						filePath = strings.Join(parts[len(parts)-l:], "")
+					}
+					entry.Data["@at"] = fmt.Sprintf("%s:%d", filePath, line)
+					break
 				}
-				entry.Data["@at"] = fmt.Sprintf("%s:%d", file, line)
-				break
 			}
 		}
+		delete(entry.Data, keyCallDepthOffset)
 	}
 	return nil
+}
+
+func (h *callerHook) DisplayLength() int {
+	if h.displayLength == 0 {
+		return defaultDisplayPathLength
+	}
+	return h.displayLength
 }

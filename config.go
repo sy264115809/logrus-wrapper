@@ -18,8 +18,8 @@ type Config struct {
 	DisableColors bool
 	Prefix        string
 
-	ShowCaller        bool
-	CallerDepthAdjust uint
+	ShowCaller     bool
+	CallPathLength int // negative means whole path
 }
 
 // OutputWriter returns a io.Writer according to the config.

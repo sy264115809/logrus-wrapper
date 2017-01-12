@@ -11,7 +11,9 @@ import (
 type Logger struct {
 	*logrus.Logger
 
-	prefix string
+	prefix          string
+	showCaller      bool
+	callDepthOffset int
 }
 
 // Entry proxies the logrus.Entry to remove namespace dependency
@@ -52,9 +54,7 @@ func New(c *Config) *Logger {
 	}
 
 	logger.setupPrefix(c.Prefix, c.DisableColors)
-	if c.ShowCaller {
-		logger.setupCaller(int(c.CallerDepthAdjust))
-	}
+	logger.setupCaller(c.ShowCaller, c.CallPathLength)
 
 	return logger
 }
@@ -75,9 +75,11 @@ func (logger *Logger) setupPrefix(prefix string, disableColor bool) {
 	})
 }
 
-func (logger *Logger) setupCaller(depthAdjust int) {
+func (logger *Logger) setupCaller(show bool, displayLength int) {
+	logger.showCaller = show
 	logger.Hooks.Add(&callerHook{
-		depthAdjust: depthAdjust,
+		show:          show,
+		displayLength: displayLength,
 	})
 }
 
@@ -93,12 +95,23 @@ func (logger *Logger) Copy(prefix ...string) *Logger {
 	}
 }
 
+// SetCallDepthOffset sets call depth offset if config.ShowCaller is set.
+func (logger *Logger) SetCallDepthOffset(offset int) *Logger {
+	logger.callDepthOffset = offset
+	return logger
+}
+
 // NewEntry returns an entry Entry
 func (logger *Logger) entry() *Entry {
 	entry := logrus.NewEntry(logger.Logger)
 	if logger.prefix != "" {
 		entry = entry.WithField("prefix", logger.prefix)
 	}
+
+	if logger.showCaller {
+		entry = entry.WithField(keyCallDepthOffset, logger.callDepthOffset)
+	}
+
 	return &Entry{
 		Entry: entry,
 	}

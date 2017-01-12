@@ -56,8 +56,9 @@ func verboseLogger() {
 
 func showCallerLogger() {
 	logrush.New(&logrush.Config{
-		Prefix:     "showCallerLogger",
-		ShowCaller: true,
+		Prefix:         "showCallerLogger",
+		ShowCaller:     true,
+		CallPathLength: 3,
 	}).WithFields(logrush.Fields{
 		"output":      "stderr",
 		"level":       "info",
@@ -69,10 +70,9 @@ func showCallerLogger() {
 
 func showCallerWithAdjustLogger() {
 	logrush.New(&logrush.Config{
-		Prefix:            "showCallerWithAdjustLogger",
-		ShowCaller:        true,
-		CallerDepthAdjust: 1,
-	}).WithFields(logrush.Fields{
+		Prefix:     "showCallerWithAdjustLogger",
+		ShowCaller: true,
+	}).SetCallDepthOffset(1).WithFields(logrush.Fields{
 		"output":      "stderr",
 		"level":       "info",
 		"show_prefix": "true",
