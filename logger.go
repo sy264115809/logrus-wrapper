@@ -52,7 +52,9 @@ func New(c *Config) *Logger {
 	}
 
 	logger.setupPrefix(c.Prefix, c.DisableColors)
-	logger.setupCaller(int(c.CallerDepthAdjust))
+	if c.ShowCaller {
+		logger.setupCaller(int(c.CallerDepthAdjust))
+	}
 
 	return logger
 }
