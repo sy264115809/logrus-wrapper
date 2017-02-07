@@ -4,7 +4,6 @@ import (
 	"os"
 
 	"github.com/Sirupsen/logrus"
-	prefixed "github.com/x-cray/logrus-prefixed-formatter"
 )
 
 // Logger is the wrapper of logrus Logger
@@ -65,7 +64,7 @@ func (logger *Logger) Prefix() string {
 }
 
 func (logger *Logger) setupPrefix(prefix string, disableColor bool) {
-	logger.Formatter = &prefixed.TextFormatter{
+	logger.Formatter = &TextFormatter{
 		DisableColors: disableColor,
 		ForceColors:   !disableColor,
 	}

@@ -1,12 +1,10 @@
-hash: b7f5c0046bad12fcfe256854876aaed3c90b8b61a26e5a850d1e71318979988d
-updated: 2017-01-06T10:37:57.50790597+08:00
+hash: be8c1b91555df349fbdd97c15166b108fcbb22aa77a23700c2f0709ab7aa8b89
+updated: 2017-02-07T11:29:16.08148659+08:00
 imports:
 - name: github.com/mgutz/ansi
   version: c286dcecd19ff979eeb73ea444e479b903f2cfcb
 - name: github.com/Sirupsen/logrus
-  version: d26492970760ca5d33129d2d799e34be5c4782eb
-- name: github.com/x-cray/logrus-prefixed-formatter
-  version: a35e641b1da09880f6432c2c7e814ef0817663f7
+  version: b9def5b3c33f812a4f503538d1ee21eeb6787d6d
 - name: golang.org/x/sys
   version: 478fcf54317e52ab69f40bb4c7a1520288d7f7ea
   subpackages:
