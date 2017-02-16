@@ -89,15 +89,16 @@ func (logger *Logger) Copy(prefix ...string) *Logger {
 		p = prefix[0]
 	}
 	return &Logger{
-		Logger: logger.Logger,
-		prefix: p,
+		Logger:     logger.Logger,
+		prefix:     p,
+		showCaller: logger.showCaller,
 	}
 }
 
 // SetCallDepthOffset sets call depth offset if config.ShowCaller is set.
-func (logger *Logger) SetCallDepthOffset(offset int) *Logger {
+func (logger Logger) SetCallDepthOffset(offset int) *Logger {
 	logger.callDepthOffset = offset
-	return logger
+	return &logger
 }
 
 // NewEntry returns an entry Entry
