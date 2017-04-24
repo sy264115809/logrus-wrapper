@@ -6,6 +6,10 @@ import (
 	"github.com/Sirupsen/logrus"
 )
 
+var (
+	DefaultTimestampFormat = ""
+)
+
 // Logger is the wrapper of logrus Logger
 type Logger struct {
 	*logrus.Logger
@@ -65,8 +69,9 @@ func (logger *Logger) Prefix() string {
 
 func (logger *Logger) setupPrefix(prefix string, disableColor bool) {
 	logger.Formatter = &TextFormatter{
-		DisableColors: disableColor,
-		ForceColors:   !disableColor,
+		DisableColors:   disableColor,
+		ForceColors:     !disableColor,
+		TimestampFormat: DefaultTimestampFormat,
 	}
 	logger.prefix = prefix
 	logger.Hooks.Add(&prefixHook{
