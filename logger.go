@@ -3,7 +3,8 @@ package logrush
 import (
 	"os"
 
-	"github.com/Sirupsen/logrus"
+	"github.com/sirupsen/logrus"
+	prefixed "github.com/x-cray/logrus-prefixed-formatter"
 )
 
 var (
@@ -68,7 +69,7 @@ func (logger *Logger) Prefix() string {
 }
 
 func (logger *Logger) setupPrefix(prefix string, disableColor bool) {
-	logger.Formatter = &TextFormatter{
+	logger.Formatter = &prefixed.TextFormatter{
 		DisableColors:   disableColor,
 		ForceColors:     !disableColor,
 		TimestampFormat: DefaultTimestampFormat,

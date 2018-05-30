@@ -7,10 +7,11 @@ import (
 	"runtime"
 	"strings"
 
-	"github.com/Sirupsen/logrus"
+	"github.com/sirupsen/logrus"
 )
 
 const (
+	keyCallAt                = "@at"
 	keyCallDepthOffset       = "__call_depth_offset__"
 	defaultDisplayPathLength = 3
 )
@@ -48,7 +49,7 @@ func (h *callerHook) Fire(entry *logrus.Entry) error {
 					if l := h.DisplayLength(); l > 0 && len(parts) > l {
 						filePath = strings.Join(parts[len(parts)-l:], "")
 					}
-					entry.Data["@at"] = fmt.Sprintf("%s:%d", filePath, line)
+					entry.Data[keyCallAt] = fmt.Sprintf("%s:%d", filePath, line)
 					break
 				}
 			}

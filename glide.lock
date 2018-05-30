@@ -1,12 +1,23 @@
-hash: be8c1b91555df349fbdd97c15166b108fcbb22aa77a23700c2f0709ab7aa8b89
-updated: 2017-02-07T11:29:16.08148659+08:00
+hash: c93635a9590f3d5cf97d0019c46448ed81aee0f3ea699ab43823e53a3d750174
+updated: 2018-05-30T15:04:23.230019+08:00
 imports:
+- name: github.com/mattn/go-colorable
+  version: efa589957cd060542a26d2dd7832fd6a6c6c3ade
+- name: github.com/mattn/go-isatty
+  version: 6ca4dbf54d38eea1a992b3c722a76a5d1c4cb25c
 - name: github.com/mgutz/ansi
-  version: c286dcecd19ff979eeb73ea444e479b903f2cfcb
-- name: github.com/Sirupsen/logrus
-  version: b9def5b3c33f812a4f503538d1ee21eeb6787d6d
+  version: 9520e82c474b0a04dd04f8a40959027271bab992
+- name: github.com/sirupsen/logrus
+  version: c155da19408a8799da419ed3eeb0cb5db0ad5dbc
+- name: github.com/x-cray/logrus-prefixed-formatter
+  version: bb2702d423886830dee131692131d35648c382e2
+- name: golang.org/x/crypto
+  version: ab813273cd59e1333f7ae7bff5d027d4aadf528c
+  subpackages:
+  - ssh/terminal
 - name: golang.org/x/sys
-  version: 478fcf54317e52ab69f40bb4c7a1520288d7f7ea
+  version: c11f84a56e43e20a78cee75a7c034031ecf57d1f
   subpackages:
   - unix
+  - windows
 testImports: []
